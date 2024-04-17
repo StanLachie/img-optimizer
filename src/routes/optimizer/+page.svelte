@@ -51,7 +51,7 @@
 </script>
 
 <svelte:head>
-	<title>Image Optimizer | LOTS</title>
+	<title>Image Optimizer | LOST</title>
 </svelte:head>
 
 <form

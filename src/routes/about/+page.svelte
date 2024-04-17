@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-	<title>About | LOTS</title>
+	<title>About | LOST</title>
 </svelte:head>
 
 <span> Coming Soon </span>

@@ -19,7 +19,7 @@
 <div class="flex min-h-[100dvh] w-full max-w-[100dvw] bg-slate-100">
 	<div id="sidebar" class="h-[100dvh] w-80 bg-white shadow-lg">
 		<div class="flex h-32 items-center justify-center">
-			<h1 class="text-4xl font-bold text-blue-500">LOTS</h1>
+			<h1 class="text-4xl font-bold text-blue-500">LOST</h1>
 		</div>
 
 		<div class="flex flex-col divide-y border-y">
