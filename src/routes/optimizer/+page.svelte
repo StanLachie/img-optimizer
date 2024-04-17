@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import JSZip from 'jszip';
 	import type { PageData } from './$types';
 
-	let files: FileList;
+	let files: FileList | null = null;
 	let quality = 80;
 	let format = 'png';
 	let width = 0;
@@ -31,6 +32,21 @@
 	function createDownloadUrl(base64: string, mimeType: any) {
 		const blob = base64ToBlob(base64, mimeType);
 		return URL.createObjectURL(blob);
+	}
+
+	async function downloadAllFiles() {
+		const zip = new JSZip();
+		uploadResult.data.files.forEach((file: any) => {
+			const blob = base64ToBlob(file.data, file.type);
+			zip.file(file.name, blob);
+		});
+		const content = await zip.generateAsync({ type: 'blob' });
+		const a = document.createElement('a');
+		a.href = URL.createObjectURL(content); // Directly create URL from Blob
+		a.download = 'optimized_images.zip';
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
 	}
 </script>
 
@@ -124,7 +140,7 @@
 
 	<div class="flex w-full flex-col justify-between gap-3 rounded-lg bg-white p-4 shadow-md">
 		<h2 class="text-xl font-semibold text-gray-900">Currently Selected Files</h2>
-		{#if files}
+		{#if files && files.length > 0}
 			<ul class="flex flex-col gap-2">
 				{#each Array.from(files) as file}
 					<li class="flex items-center justify-between">
@@ -157,7 +173,7 @@
 		<div class="flex w-full flex-col justify-between gap-3 rounded-lg bg-white p-4 shadow-md">
 			<h2 class="text-center text-xl font-semibold text-gray-900">Optimizing Your Files</h2>
 			<div class="h-2 w-full overflow-hidden rounded-lg bg-blue-100">
-				<div class="animate-progress origin-left-right h-full w-full bg-blue-500"></div>
+				<div class="h-full w-full origin-left-right animate-progress bg-blue-500"></div>
 			</div>
 		</div>
 	{/if}
@@ -181,13 +197,15 @@
 								<span>
 									{(size / 1024).toFixed(2)} KB
 								</span>
-								{#if files[index].size / 1024 < size / 1024}
+								{#if files && files[index].size / 1024 < size / 1024}
 									<span class="text-red-400">
 										(+{(size / 1024 - files[index].size / 1024).toFixed(2)} KB)
 									</span>
 								{:else}
 									<span class="text-green-400">
-										(-{(files[index].size / 1024 - size / 1024).toFixed(2)} KB)
+										{#if files && files[index]}
+											(-{(files[index].size / 1024 - size / 1024).toFixed(2)} KB)
+										{/if}
 									</span>
 								{/if}
 								<a
@@ -200,6 +218,16 @@
 							</div>
 						</li>
 					{/each}
+					{#if uploadResult.data.files.length > 1}
+						<div class="flex w-full justify-end">
+							<button
+								class="rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors duration-150 hover:bg-blue-700"
+								on:click={downloadAllFiles}
+							>
+								Download All
+							</button>
+						</div>
+					{/if}
 				</ul>
 			{:else}
 				<p>Failure to optimize files.</p>

@@ -13,7 +13,6 @@ export const actions = {
 
 		for (const file of files) {
 			if (file instanceof File) {
-				const timestamp = new Date().toISOString().replace(/[-:.TZ]/g, '');
 				const buffer = await file.arrayBuffer();
 				let image = sharp(Buffer.from(buffer));
 
@@ -34,8 +33,9 @@ export const actions = {
 				}
 
 				const optimizedBuffer = await image.toBuffer();
+				const fileName = file.name.split('.').slice(0, -1).join('.');
 				optimizedFiles.push({
-					name: `optimized-${timestamp}`,
+					name: `optimized-${fileName}.${format}`,
 					type: `image/${format}`,
 					size: optimizedBuffer.length,
 					data: optimizedBuffer.toString('base64')
