@@ -68,7 +68,9 @@
 	}}
 	enctype="multipart/form-data"
 >
-	<div class="flex w-full items-center justify-between rounded-lg bg-white p-4 shadow-md">
+	<div
+		class="flex w-full flex-wrap items-center justify-between gap-3 rounded-lg bg-white p-4 shadow-md"
+	>
 		<h2 class="text-xl font-semibold text-gray-900">File Selector</h2>
 		<label
 			class="cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors duration-150 hover:bg-blue-600"
@@ -88,7 +90,7 @@
 	<div class="flex w-full flex-col justify-between rounded-lg bg-white p-4 shadow-md">
 		<h2 class="text-xl font-semibold text-gray-900">Optimization Settings</h2>
 
-		<div class="grid grid-cols-4 gap-3">
+		<div class="grid grid-cols-2 gap-3 md:grid-cols-4">
 			<div class="flex flex-col">
 				<label class="my-1 text-gray-700">Width</label>
 				{#if width === 0}
@@ -141,9 +143,9 @@
 	<div class="flex w-full flex-col justify-between gap-3 rounded-lg bg-white p-4 shadow-md">
 		<h2 class="text-xl font-semibold text-gray-900">Currently Selected Files</h2>
 		{#if files && files.length > 0}
-			<ul class="flex flex-col gap-2">
+			<ul class="flex flex-col gap-3">
 				{#each Array.from(files) as file}
-					<li class="flex items-center justify-between">
+					<li class="flex items-center justify-between gap-3">
 						<div class="flex items-center gap-3">
 							<img
 								src={URL.createObjectURL(file)}
@@ -183,7 +185,7 @@
 			{#if uploadResult.data.success}
 				<ul class="flex flex-col gap-2">
 					{#each uploadResult.data.files as { name, type, size, data }, index}
-						<li class="flex items-center justify-between">
+						<li class="flex flex-wrap items-center justify-between gap-3">
 							<div class="flex items-center gap-3">
 								<img
 									src={'data:' + type + ';base64,' + data}
