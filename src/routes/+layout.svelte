@@ -27,7 +27,7 @@
 			: 'hidden'} h-[100dvh] bg-white shadow-lg md:block md:w-80"
 	>
 		<div class="flex h-32 items-center justify-center">
-			<h1 class="text-4xl font-bold text-blue-500">L.O.S.T</h1>
+			<a href="/" class="cursor-pointer text-4xl font-bold text-blue-500">L.O.S.T</a>
 		</div>
 
 		<div class="flex flex-col divide-y border-y">
