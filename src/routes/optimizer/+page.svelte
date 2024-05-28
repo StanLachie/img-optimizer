@@ -28,7 +28,6 @@
 		return new Blob(byteArrays, { type: mimeType });
 	}
 
-	// Generate a download link from blob
 	function createDownloadUrl(base64: string, mimeType: any) {
 		const blob = base64ToBlob(base64, mimeType);
 		return URL.createObjectURL(blob);
@@ -42,7 +41,7 @@
 		});
 		const content = await zip.generateAsync({ type: 'blob' });
 		const a = document.createElement('a');
-		a.href = URL.createObjectURL(content); // Directly create URL from Blob
+		a.href = URL.createObjectURL(content);
 		a.download = 'optimized_images.zip';
 		document.body.appendChild(a);
 		a.click();
@@ -231,6 +230,7 @@
 						</div>
 					{/if}
 				</ul>
+				<p>Failed to convert {uploadResult.data.failedCount} images.</p>
 			{:else}
 				<p>Failure to optimize files.</p>
 			{/if}
